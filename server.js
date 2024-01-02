@@ -16,7 +16,6 @@ app.use(express.static(publicDirectoryPath));
 app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
 
-// Add the DELETE route using fs module
 app.delete("/api/notes/:id", (req, res) => {
     fs.readFile("./db/db.json", 'utf-8', (error, file) => {
         if (error) throw error;
@@ -30,9 +29,10 @@ app.delete("/api/notes/:id", (req, res) => {
         fs.writeFile('./db/db.json', stringifiedFile, 'utf-8', (error) => {
             if (error) throw error;
             console.log("...Note Deleted!");
-        });
 
-        return res.send(JSON.parse(stringifiedFile));
+            // Move this inside the writeFile callback to ensure it's sent after the file update
+            res.send(JSON.parse(stringifiedFile));
+        });
     });
 });
 
