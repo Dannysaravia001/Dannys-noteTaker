@@ -1,14 +1,12 @@
-// Import required modules
 const express = require('express');
 const htmlRoutes = require('./routes/htmlRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 const path = require('path');
+const fs = require('fs'); // Import the fs module
 
-// Create an Express application
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to handle JSON and urlencoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,6 +15,26 @@ app.use(express.static(publicDirectoryPath));
 
 app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
+
+// Add the DELETE route using fs module
+app.delete("/api/notes/:id", (req, res) => {
+    fs.readFile("./db/db.json", 'utf-8', (error, file) => {
+        if (error) throw error;
+
+        let deleteNoteID = req.params.id;
+        const parseFile = JSON.parse(file);
+        const modifiedFile = parseFile.filter(elem => elem.id != deleteNoteID);
+
+        const stringifiedFile = JSON.stringify(modifiedFile);
+
+        fs.writeFile('./db/db.json', stringifiedFile, 'utf-8', (error) => {
+            if (error) throw error;
+            console.log("...Note Deleted!");
+        });
+
+        return res.send(JSON.parse(stringifiedFile));
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
