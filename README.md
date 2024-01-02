@@ -42,5 +42,5 @@ No liceneses used
 
 ![Screenshot1](<./img/Screenshot1.png>)
 
-![Screenshot2](<./img/screenshot2.png>)
+![Screenshot2](<./img/Screenshot2.png>)
 ## videos-demo
