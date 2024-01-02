@@ -18,3 +18,21 @@ router.get('/notes', (req, res) => {
     }
 });
 
+router.post('/notes', (req, res) => {
+    try {
+        const newNote = req.body;
+        newNote.id = uuidv4();
+
+        const notes = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+        notes.push(newNote);
+
+        fs.writeFileSync(dbPath, JSON.stringify(notes), 'utf8');
+
+        res.json(newNote);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+module.exports = router;
