@@ -40,7 +40,7 @@ Github profile: [Dannysaravia001](https://github.com/Dannysaravia001)
 No liceneses used
 ## Screenshots
 
-![Screenshot1](<./Develop/img/Screenshot1.png>)
+![Screenshot1](<./img/Screenshot1.png>)
 
-![Screenshot2](<./Develop/img/screenshot2.png>)
+![Screenshot2](<./img/screenshot2.png>)
 ## videos-demo
